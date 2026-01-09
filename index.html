@@ -1,0 +1,166 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+<meta charset="UTF-8">
+<title>Soi j v con chó</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<style>
+body {
+  margin: 0;
+  height: 100vh;
+  overflow: hidden;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background-color: black;
+}
+
+/* === GIỮ TỈ LỆ 194x259 === */
+.bg-container {
+  width: calc(100vh * 194 / 259);
+  height: 100vh;
+  background: url("https://i.pinimg.com/236x/a8/0d/13/a80d13e8d33ffe6583e9b2c38c798528.jpg") no-repeat center center;
+  background-size: cover;
+  position: relative;
+}
+
+/* === OVERLAY === */
+.overlay {
+  position: absolute;
+  inset: 0;
+  background: rgba(0,0,0,0.35);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+/* === MARQUEE === */
+.marquee {
+  width: 100%;
+  overflow: hidden;
+}
+
+.marquee-inner {
+  display: inline-flex;
+  white-space: nowrap;
+  animation: run 8s linear infinite;
+}
+
+.text {
+  font-size: 42px;
+  font-weight: bold;
+  margin-right: 60px;
+  text-shadow: 0 0 10px black;
+  animation: color 2s linear infinite, shake 0.15s infinite;
+}
+
+@keyframes run {
+  from { transform: translateX(0); }
+  to { transform: translateX(-50%); }
+}
+
+@keyframes color {
+  0% { color: red; }
+  20% { color: orange; }
+  40% { color: yellow; }
+  60% { color: lime; }
+  80% { color: cyan; }
+  100% { color: magenta; }
+}
+
+@keyframes shake {
+  0% { transform: translate(0,0); }
+  25% { transform: translate(-2px,1px); }
+  50% { transform: translate(2px,-1px); }
+  75% { transform: translate(-1px,-2px); }
+  100% { transform: translate(1px,2px); }
+}
+
+/* === TIM RƠI === */
+.heart {
+  position: absolute;
+  top: -10vh;
+  font-size: 20px;
+  animation: fall linear infinite;
+  opacity: 0.9;
+}
+
+@keyframes fall {
+  from { transform: translateY(-10vh); }
+  to { transform: translateY(110vh); }
+}
+
+/* === NÚT NHẠC === */
+.music-btn {
+  position: fixed;
+  bottom: 20px;
+  right: 20px;
+  padding: 12px 20px;
+  font-size: 18px;
+  font-weight: bold;
+  color: white;
+  background: rgba(255,0,0,0.8);
+  border: none;
+  border-radius: 10px;
+  cursor: pointer;
+  z-index: 999;
+}
+</style>
+</head>
+
+<body>
+
+<div class="bg-container">
+  <div class="overlay">
+    <div class="marquee">
+      <div class="marquee-inner">
+        <div class="text">Chấn Gia Ho bớt soi 🔪🔪🔪</div>
+        <div class="text">Chấn Gia Ho bớt soi 🔪🔪🔪</div>
+        <div class="text">Chấn Gia Ho bớt soi 🔪🔪🔪</div>
+        <div class="text">Chấn Gia Ho bớt soi 🔪🔪🔪</div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<button class="music-btn" id="musicBtn">Mở Nhạc 🎵</button>
+
+<!-- === NHẠC LOCAL === -->
+<audio id="bgm" loop>
+  <source src="music.mp3" type="audio/mp3">
+</audio>
+
+<script>
+function createHeart() {
+  const heart = document.createElement("div");
+  heart.className = "heart";
+  heart.textContent = "🔪";
+  heart.style.left = Math.random() * 100 + "vw";
+  heart.style.fontSize = 16 + Math.random() * 24 + "px";
+  heart.style.animationDuration = 3 + Math.random() * 4 + "s";
+  document.body.appendChild(heart);
+  setTimeout(() => heart.remove(), 8000);
+}
+setInterval(createHeart, 200);
+
+const music = document.getElementById("bgm");
+const btn = document.getElementById("musicBtn");
+let isPlaying = false;
+
+btn.onclick = () => {
+  if (!isPlaying) {
+    music.play();
+    btn.textContent = "Tắt Nhạc 🔇";
+    btn.style.background = "rgba(0,0,0,0.8)";
+  } else {
+    music.pause();
+    btn.textContent = "Mở Nhạc 🎵";
+    btn.style.background = "rgba(255,0,0,0.8)";
+  }
+  isPlaying = !isPlaying;
+};
+</script>
+
+</body>
+</html>
